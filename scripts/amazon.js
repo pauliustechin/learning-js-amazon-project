@@ -28,6 +28,10 @@
 //     }
 // ];
 
+// IMPORTING MODULE
+import {cart} from '../data/cart.js';
+// import {cart as myCart} from '../data/cart.js';
+
 let productsHTML = '';
 
 products.forEach((product) => {
