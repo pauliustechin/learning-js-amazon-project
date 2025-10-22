@@ -112,6 +112,18 @@ document.querySelectorAll('.js-add-to-cart')
             });
             }
 
-            console.log(cart);
+            // CART QUANTYTI
+            
+            let cartQuantyti = 0;
+
+            cart.forEach((item) => {
+                cartQuantyti += item.quantyti;
+            });
+
+            // console.log(cart);
+            // console.log(cartQuantyti);
+
+            document.querySelector('.js-cart-quantyti')
+                .innerHTML = cartQuantyti;
         })
     })
