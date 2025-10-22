@@ -29,15 +29,24 @@
 // ];
 
 // IMPORTING MODULE
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
+
+
+// // GALIMA IR TAIP:
+// import * as cartModule from'../data/cart.js';
+// // TADA NAUDOJAM TOKIU BUDU
+// cartModule.cart;
+// cartModule.addToCart();
+
+
 import {products} from '../data/products.js'
 // import {cart as myCart} from '../data/cart.js';
 
 let productsHTML = '';
 
 products.forEach((product) => {
-    productsHTML +=
-     `<div class="product-container">
+  productsHTML +=
+    `<div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
               src="${product.image}">
@@ -51,7 +60,7 @@ products.forEach((product) => {
             <img class="product-rating-stars"
               src="images/ratings/rating-${product.rating.stars * 10}.png">
             <div class="product-rating-count link-primary">
-              ${Math.round(product.rating.count,2)}
+              ${Math.round(product.rating.count, 2)}
             </div>
           </div>
 
@@ -91,44 +100,55 @@ products.forEach((product) => {
 console.log(productsHTML);
 
 document.querySelector('.js-products-grid').
-innerHTML = productsHTML;
+  innerHTML = productsHTML;
+
+// MOVING TO cart.js
+
+// function addToCart(productId) {
+//   let matchingItem;
+
+//   cart.forEach((cartItem) => {
+//     if (productId === cartItem.productId) {
+//       matchingItem = cartItem;
+//     }
+//   });
+
+//   if (matchingItem) {
+//     matchingItem.quantyti += 1;
+//   } else {
+//     cart.push({
+//       productId: productId,
+//       quantyti: 1
+//     });
+//   }
+// }
+
+function updateCartQuantyti() {
+  let cartQuantyti = 0;
+
+  cart.forEach((cartItem) => {
+    cartQuantyti += cartItem.quantyti;
+  });
+
+  // console.log(cart);
+  // console.log(cartQuantyti);
+
+  document.querySelector('.js-cart-quantyti')
+    .innerHTML = cartQuantyti;
+
+}
 
 document.querySelectorAll('.js-add-to-cart')
-    .forEach((button) => {
-        button.addEventListener('click', () => {
-            // console.log(button.dataset.productName);
-            // console.log(button.dataset);
-            const productId = button.dataset.productId;
-            
-            let matchingItem;
+  .forEach((button) => {
+    button.addEventListener('click', () => {
+      // console.log(button.dataset.productName);
+      // console.log(button.dataset);
+      const productId = button.dataset.productId;
 
-            cart.forEach((item) => {
-                if (productId === item.productId) {
-                    matchingItem = item;
-                }
-            });
+      addToCart(productId);
 
-            if (matchingItem) {
-                matchingItem.quantyti += 1;
-            } else {
-                cart.push({
-                productId: productId,
-                quantyti: 1
-            });
-            }
+      // CART QUANTYTI
 
-            // CART QUANTYTI
-            
-            let cartQuantyti = 0;
-
-            cart.forEach((item) => {
-                cartQuantyti += item.quantyti;
-            });
-
-            // console.log(cart);
-            // console.log(cartQuantyti);
-
-            document.querySelector('.js-cart-quantyti')
-                .innerHTML = cartQuantyti;
-        })
+      updateCartQuantyti();
     })
+  })
