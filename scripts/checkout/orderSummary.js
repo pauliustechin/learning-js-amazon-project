@@ -1,9 +1,9 @@
 import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
-import { products } from '../../data/products.js';
+import { getProduct, products } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
-import { deliveryOptions } from '../../data/deliveryOptions.js'
+import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js'
 
 
 // WORKING WITH EXTERNAL LIBRARIES PRADZIA
@@ -25,7 +25,6 @@ deliveryDate.format('dddd, MMMM D')
 export function renderOrderSummary() {
 
 
-
     let cartSummaryHTML = '';
     let radioNumber = 0;
 
@@ -33,30 +32,21 @@ export function renderOrderSummary() {
 
         const productId = cartItem.productId;
 
-        let matchingProduct;
-
-        //vietoj radio input number, galima naudoti tiesiog product ID.
-        radioNumber += 1;
-
-        products.forEach((product) => {
-            if (product.id === productId) {
-                matchingProduct = product;
-            }
-
-            // console.log(matchingProduct);
-        });
+        const matchingProduct = getProduct(productId);
 
 
         const deliveryOptionId = cartItem.
             deliveryOptionId;
 
-        let deliveryOption;
+        // let deliveryOption;
 
-        deliveryOptions.forEach((option) => {
-            if (option.id === deliveryOptionId) {
-                deliveryOption = option;
-            }
-        });
+        // deliveryOptions.forEach((option) => {
+        //     if (option.id === deliveryOptionId) {
+        //         deliveryOption = option;
+        //     }
+        // });
+
+        const deliveryOption = getDeliveryOption(deliveryOptionId);
 
         const today = dayjs();
         const deliveryDate = today.add(
