@@ -29,7 +29,7 @@
 // ];
 
 // IMPORTING MODULE
-import {cart, addToCart} from '../data/cart.js';
+import { cart, addToCart } from '../data/cart.js';
 
 
 // // GALIMA IR TAIP:
@@ -39,16 +39,21 @@ import {cart, addToCart} from '../data/cart.js';
 // cartModule.addToCart();
 
 
-import {products} from '../data/products.js';
+import { products, loadProducts } from '../data/products.js';
 // import {cart as myCart} from '../data/cart.js';
 
 import { formatCurrency } from './utils/money.js';
 
-let productsHTML = '';
 
-products.forEach((product) => {
-  productsHTML +=
-    `<div class="product-container">
+loadProducts(renderProductsGrid);
+
+
+
+function renderProductsGrid() {
+  let productsHTML = '';
+  products.forEach((product) => {
+    productsHTML +=
+      `<div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
               src="${product.image}">
@@ -100,12 +105,12 @@ products.forEach((product) => {
             Add to Cart
           </button>
         </div>`
-});
+  });
+  // console.log(productsHTML);
 
-// console.log(productsHTML);
-
-document.querySelector('.js-products-grid').
-  innerHTML = productsHTML;
+  document.querySelector('.js-products-grid').
+    innerHTML = productsHTML;
+}
 
 // MOVING TO cart.js
 
