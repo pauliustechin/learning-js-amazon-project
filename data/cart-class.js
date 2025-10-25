@@ -17,7 +17,7 @@ class Cart {
         this.#loadFromStorage();
     }
 
-    // 
+    // PRIVATE METHOD, NAUDOJAMAS TIK INSIDE THIS CLASS: #
     #loadFromStorage() {
         // keiciam cart to "this", jei pasikeistu cart name.
         // cart.cartItems = JSON.parse(localStorage.getItem('cart'));

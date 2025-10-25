@@ -60,14 +60,14 @@ products.forEach((product) => {
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars * 10}.png">
+              src="${product.getStarsUrl()}">
             <div class="product-rating-count link-primary">
               ${Math.round(product.rating.count, 2)}
             </div>
           </div>
 
           <div class="product-price">
-            $${formatCurrency(product.priceCents)}
+            ${product.getPrice()}
           </div>
 
           <div class="product-quantity-container">
@@ -99,7 +99,7 @@ products.forEach((product) => {
         </div>`
 });
 
-console.log(productsHTML);
+// console.log(productsHTML);
 
 document.querySelector('.js-products-grid').
   innerHTML = productsHTML;
