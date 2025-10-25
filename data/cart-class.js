@@ -5,23 +5,24 @@
 class Cart {
     //jei undefined priimtina taip:
     cartItems;
-    localStorageKey;
+    // # PRIVATE PROPERTY GALIMA NAUDOTI TIK KLASEJE
+    #localStorageKey;
     // cartItems = undefined;
     // localStorageKey = undefined;
 
     // constructor galime naudoti paramtetrus.
     // great place to add set up code
     constructor(localStorageKey) {
-        this.localStorageKey = localStorageKey;
-        this.loadFromStorage();
+        this.#localStorageKey = localStorageKey;
+        this.#loadFromStorage();
     }
 
-
-    loadFromStorage() {
+    // 
+    #loadFromStorage() {
         // keiciam cart to "this", jei pasikeistu cart name.
         // cart.cartItems = JSON.parse(localStorage.getItem('cart'));
 
-        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
 
         // keiciam visur kur cart.
         if (!this.cartItems) {
@@ -40,7 +41,7 @@ class Cart {
     }
 
     saveToStorage() {
-        localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+        localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
     }
 
     addToCart(productId) {
@@ -113,6 +114,9 @@ const businessCart = new Cart('cart-business');
 
 console.log(cart);
 console.log(businessCart);
+
+// taip neveiks, nes padarem private property
+// cart.#localStorageKey = 'test';
 
 // galime paziureti ar businessCart yra klases instance.
 console.log(businessCart instanceof Cart);
