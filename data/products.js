@@ -1,4 +1,4 @@
-import {formatCurrency} from '../scripts/utils/money.js'
+import { formatCurrency } from '../scripts/utils/money.js'
 
 export function getProduct(productId) {
   let matchingProduct;
@@ -18,7 +18,7 @@ class Product {
   name;
   rating;
   priceCents;
-  constructor (productDetails) {
+  constructor(productDetails) {
     this.id = productDetails.id;
     this.image = productDetails.image;
     this.name = productDetails.name;
@@ -33,7 +33,56 @@ class Product {
   getPrice() {
     return `$${formatCurrency(this.priceCents)}`
   }
+
+  // sukuriam toki pati method kaip ir clothing, nes kai naudojame amazon.js 
+  // mes errora tiems productams kurie is parent class.
+  extraInfoHTML() {
+    return '';
+  }
+
 }
+
+class Clothing extends Product {
+  sizeChartLink;
+
+  constructor(productDetails) {
+    // super calls the constructor of parent class
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  extraInfoHTML() {
+    // galima išaukti ir parent methods su super
+    // super.extraInfoHtml();
+    return `
+    <a href="${this.sizeChartLink}" target="_blank">
+    Size chart
+    </a>
+    `;
+  }
+
+}
+
+// const tshirt = new Clothing({
+//   id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
+//   image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
+//   name: "Adults Plain Cotton T-Shirt - 2 Pack",
+//   rating: {
+//     stars: 4.5,
+//     count: 56
+//   },
+//   priceCents: 799,
+//   keywords: [
+//     "tshirts",
+//     "apparel",
+//     "mens"
+//   ],
+//   type: "clothing",
+//   sizeChartLink: "images/clothing-size-chart.png"
+// });
+
+// console.log(tshirt);
+// console.log(tshirt.getPrice());
 
 // EXAMPLE:
 // const product1 = new Product({
@@ -714,6 +763,9 @@ export const products = [
     ]
   }
 ].map((productDetails) => {
+  if (productDetails.type === 'clothing') {
+    return new Clothing(productDetails);
+  }
   return new Product(productDetails);
 });
 
