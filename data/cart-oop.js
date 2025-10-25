@@ -1,5 +1,4 @@
 // Use PascalCase for functions which generates an objects.
-// arba  kitaip klases.
 
 function Cart(localStorageKey) {
     const cart = {
