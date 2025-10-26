@@ -134,6 +134,30 @@ class Clothing extends Product {
 // }
 
 // object3.method();
+export function loadProductsFetch() {
+  // fetch yra kaip promise, tik pirmam žingsnyje užkraunam info.
+  // priskiriam fetch kaip variable, kad galetume return daryt
+  const promise = fetch('https://supersimplebackend.dev/products').then((response) => {
+    return response.json();
+  }).then((productsData) => {
+    products = productsData.map((productDetails) => {
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+
+    console.log('load products');
+  });
+// darom promise return
+  return promise;
+}
+
+// // kadangi returninom promose is f-jos  loadProductsFetch(), galime toliau naudoti .then
+// loadProductsFetch().then(() => {
+//   console.log('next step')
+// });
+
 
 export let products = [];
 

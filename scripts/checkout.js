@@ -2,20 +2,40 @@ import { renderOrderSummary } from './checkout/orderSummary.js';
 import { renderPaymentSummary } from './checkout/paymentSummary.js';
 // import '../data/cart-class.js';
 // import '../data/backend-practise.js';
-import { loadProducts } from '../data/products.js';
+import { loadProducts, loadProductsFetch } from '../data/products.js';
 import { loadCart } from '../data/cart.js';
 
-new Promise((resolve) => {
-    // console.log('start promise')
-    loadProducts(() => {
-        // console.log('finished loading')
-        resolve();
-    });
-}).then(() => {
-    // console.log('next step');
+
+// KAI DAROM SU FETCH
+Promise.all([
+    loadProductsFetch(),
+    new Promise((resolve) => {
+        loadCart(() => {
+            resolve();
+        });
+    })
+]).then(() => {
     renderOrderSummary();
     renderPaymentSummary();
 });
+
+
+
+
+// SU XHR KAI DAROM
+// new Promise((resolve) => {
+//     // console.log('start promise')
+//     loadProducts(() => {
+//         // console.log('finished loading')
+//         resolve();
+//     });
+// }).then(() => {
+//     // console.log('next step');
+//     renderOrderSummary();
+//     renderPaymentSummary();
+// });
+
+
 
 
 
