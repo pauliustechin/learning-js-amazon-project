@@ -6,18 +6,60 @@ import { loadProducts, loadProductsFetch } from '../data/products.js';
 import { loadCart } from '../data/cart.js';
 
 
-// KAI DAROM SU FETCH
-Promise.all([
-    loadProductsFetch(),
-    new Promise((resolve) => {
+
+// KAI DAROM SU ASYNC AWAIT
+
+async function loadPage() {
+    // console.log('load page');
+
+    await loadProductsFetch();
+
+    await new Promise((resolve) => {
         loadCart(() => {
-            resolve();
+            resolve('value3');
         });
-    })
-]).then(() => {
-    renderOrderSummary();
-    renderPaymentSummary();
-});
+    });
+
+    
+
+    // // Jei norime, grazinti kazkoki value
+    // // tada await priskiriam value ir returninam
+    // // siuo atveju value butu value3
+    // const value = await new Promise((resolve) => {
+    //     loadCart(() => {
+    //         resolve('value3');
+    //     });
+    // });
+
+    // renderOrderSummary();
+    // renderPaymentSummary();
+
+
+    // NAUDOJAM await vietoje:
+    // loadProductsFetch().then(() => {
+
+    // })
+
+    // return 'value2'
+}
+
+// value 2 = value
+loadPage();
+
+
+
+// // KAI DAROM SU FETCH
+// Promise.all([
+//     loadProductsFetch(),
+//     new Promise((resolve) => {
+//         loadCart(() => {
+//             resolve();
+//         });
+//     })
+// ]).then(() => {
+//     renderOrderSummary();
+//     renderPaymentSummary();
+// });
 
 
 
